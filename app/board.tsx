@@ -23,7 +23,7 @@ const hitPos = (d: Dart) => {
 export default function Board({ targets, thrown }: { targets: Dart[]; thrown: Dart[] }) {
   const isT = (m: number, n: number) => targets.some((t) => t.m === m && t.n === n);
   return (
-    <svg viewBox="-118 -118 236 236" className="board-svg h-full w-full drop-shadow-lg" role="img" aria-label="Dartboard">
+    <svg viewBox="-118 -118 236 236" width="320" height="320" className="board-svg h-full w-full drop-shadow-lg" role="img" aria-label="Dartboard">
       <circle r="116" fill="#0b1d3a" />
       <circle r="104" fill="#111" />
       {ORDER.map((n, i) => {

@@ -12,8 +12,8 @@
 @custom-variant short (@media (max-height: 480px));
 
 @theme {
-  --color-dk-ink: #0b1d3a;
-  --color-dk-ball: #d9f100;
+  --color-dk-ink: #0f172a;
+  --color-dk-ball: #f97316;
   --color-dk-ta: #1d4ed8;
   --color-dk-tb: #ea580c;
   --color-dk-tc: #059669;

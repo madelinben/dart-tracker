@@ -25,8 +25,8 @@ const TABS = [
 export function DartsApp() {
   const [tab, setTab] = useState<(typeof TABS)[number][0]>("play");
   return (
-    <main className="dk-root mx-auto grid h-full w-full max-w-lg wide:max-w-6xl wide:shadow-xl grid-cols-[minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)_auto] overflow-hidden bg-[#eef2f7]">
-      <header className="flex items-center justify-center gap-2 bg-gradient-to-r from-dk-ink to-[#173a73] px-4 py-3 wide:py-2 short:py-1 text-white shadow-lg">
+    <main className="dk-root mx-auto grid h-full w-full max-w-lg wide:max-w-6xl wide:shadow-xl grid-cols-[minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)_auto] overflow-hidden bg-[#f8fafc]">
+      <header className="flex items-center justify-center gap-2 bg-gradient-to-r from-dk-ink to-[#1e293b] px-4 py-3 wide:py-2 short:py-1 text-white shadow-lg">
         <span className="grid h-8 w-8 place-items-center rounded-full bg-dk-ball text-dk-ink shadow-inner">
           <svg
             aria-hidden="true"

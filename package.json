@@ -1,27 +1,35 @@
 {
-  "name": "darts-score",
-  "version": "0.1.0",
+  "name": "@get-out-there/tool-darts",
+  "version": "0.2.0",
   "private": true,
+  "type": "module",
+  "description": "X01 darts scorer. Embedded in get-out-there; also deployed standalone to GitHub Pages from demo/.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles.css": "./src/styles.css"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "deploy": "next build && rm -rf docs && cp -r out docs && touch docs/.nojekyll",
-    "test": "node --test lib/darts.test.ts",
+    "dev": "vite --config demo/vite.config.ts",
+    "build:demo": "vite build --config demo/vite.config.ts && touch docs/.nojekyll",
+    "ts-check": "tsc --noEmit",
+    "test": "node --test src/lib/darts.test.ts",
     "test:e2e": "playwright test"
   },
-  "dependencies": {
-    "next": "16.4.0",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",
-    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/vite": "^4.1.0",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.7.0",
+    "vite": "^7.0.0"
   }
 }

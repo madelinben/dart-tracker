@@ -1,4 +1,4 @@
-import { value, type Dart } from "@/lib/darts";
+import { value, type Dart } from "../lib/darts";
 
 const ORDER = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5]; // clockwise from the top
 const R = { bull: 3.7, outer: 9.35, t1: 58.2, t2: 62.9, d1: 95.3, d2: 100 };
@@ -23,7 +23,7 @@ const hitPos = (d: Dart) => {
 export default function Board({ targets, thrown }: { targets: Dart[]; thrown: Dart[] }) {
   const isT = (m: number, n: number) => targets.some((t) => t.m === m && t.n === n);
   return (
-    <svg viewBox="-118 -118 236 236" width="320" height="320" className="board-svg h-full w-full drop-shadow-lg" role="img" aria-label="Dartboard">
+    <svg viewBox="-118 -118 236 236" width="320" height="320" className="dk-board-svg h-full w-full drop-shadow-lg" role="img" aria-label="Dartboard">
       <circle r="116" fill="#0b1d3a" />
       <circle r="104" fill="#111" />
       {ORDER.map((n, i) => {
@@ -34,14 +34,14 @@ export default function Board({ targets, thrown }: { targets: Dart[]; thrown: Da
             {RINGS.map(([r1, r2, m]) => {
               const hot = isT(m, n);
               const base = m === 1 ? (even ? "#161616" : "#f1e2b6") : even ? "#dc2626" : "#15803d";
-              return <path key={m + "-" + r1} d={ring(r1, r2, a1, a2)} fill={hot ? "#d9f100" : base} stroke="#9ca3af" strokeWidth="0.5" className={hot ? "pulse" : undefined} />;
+              return <path key={m + "-" + r1} d={ring(r1, r2, a1, a2)} fill={hot ? "#d9f100" : base} stroke="#9ca3af" strokeWidth="0.5" className={hot ? "dk-pulse" : undefined} />;
             })}
             <text x={lx} y={ly} textAnchor="middle" dominantBaseline="central" fontSize="9" fontWeight="800" fill="#fff">{n}</text>
           </g>
         );
       })}
-      <circle r={R.outer} fill={isT(1, 25) ? "#d9f100" : "#15803d"} stroke="#9ca3af" strokeWidth="0.5" className={isT(1, 25) ? "pulse" : undefined} />
-      <circle r={R.bull} fill={isT(2, 25) ? "#d9f100" : "#dc2626"} stroke="#9ca3af" strokeWidth="0.5" className={isT(2, 25) ? "pulse" : undefined} />
+      <circle r={R.outer} fill={isT(1, 25) ? "#d9f100" : "#15803d"} stroke="#9ca3af" strokeWidth="0.5" className={isT(1, 25) ? "dk-pulse" : undefined} />
+      <circle r={R.bull} fill={isT(2, 25) ? "#d9f100" : "#dc2626"} stroke="#9ca3af" strokeWidth="0.5" className={isT(2, 25) ? "dk-pulse" : undefined} />
       {thrown.filter((d) => value(d) > 0).map((d, i) => {
         const [x, y] = hitPos(d);
         return (

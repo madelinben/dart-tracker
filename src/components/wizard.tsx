@@ -1,15 +1,15 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
-import { start, type Match } from "@/lib/darts";
+import { start, type Match } from "../lib/darts";
 
 const KEY = "darts-setup"; // long-term: names + options; the match itself lives in state only
-export const BG = ["bg-ta", "bg-tb", "bg-tc", "bg-td"];
+export const BG = ["bg-dk-ta", "bg-dk-tb", "bg-dk-tc", "bg-dk-td"];
 type Stage = "players" | "options" | "bull" | "order";
 const ORDER: Stage[] = ["players", "options", "bull", "order"];
 
 const Head = ({ icon, title, text }: { icon: string; title: string; text: ReactNode }) => (
   <div className="flex items-start gap-3">
-    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-ball text-2xl shadow-inner">{icon}</span>
+    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-dk-ball text-2xl shadow-inner">{icon}</span>
     <div>
       <h2 className="text-2xl font-black leading-tight">{title}</h2>
       <p className="text-sm font-medium text-slate-600">{text}</p>
@@ -17,10 +17,10 @@ const Head = ({ icon, title, text }: { icon: string; title: string; text: ReactN
   </div>
 );
 const Next = ({ onClick, children }: { onClick: () => void; children: ReactNode }) => (
-  <button onClick={onClick} className="min-h-14 w-full rounded-2xl bg-ink text-lg font-black text-ball shadow-xl">{children}</button>
+  <button onClick={onClick} className="min-h-14 w-full rounded-2xl bg-dk-ink text-lg font-black text-dk-ball shadow-xl">{children}</button>
 );
 const Chip = ({ on, onClick, children }: { on: boolean; onClick: () => void; children: ReactNode }) => (
-  <button onClick={onClick} aria-pressed={on} className={`min-h-12 flex-1 rounded-xl px-2 text-base font-black ${on ? "bg-ink text-ball" : "bg-slate-100"}`}>{children}</button>
+  <button onClick={onClick} aria-pressed={on} className={`min-h-12 flex-1 rounded-xl px-2 text-base font-black ${on ? "bg-dk-ink text-dk-ball" : "bg-slate-100"}`}>{children}</button>
 );
 
 export default function Wizard({ onStart }: { onStart: (m: Match) => void }) {
@@ -56,7 +56,7 @@ export default function Wizard({ onStart }: { onStart: (m: Match) => void }) {
       <div className="flex items-center gap-2 px-3 pt-3">
         {hist.length > 0 && <button onClick={back} className="min-h-11 rounded-xl bg-slate-200 px-3 text-sm font-extrabold">← Back</button>}
         <div className="ml-auto flex gap-1.5" aria-label={`Step ${step} of ${ORDER.length}`}>
-          {ORDER.map((s, i) => <span key={s} className={`h-2 w-6 rounded-full ${i < step ? "bg-ink" : "bg-slate-300"}`} />)}
+          {ORDER.map((s, i) => <span key={s} className={`h-2 w-6 rounded-full ${i < step ? "bg-dk-ink" : "bg-slate-300"}`} />)}
         </div>
       </div>
 
@@ -71,7 +71,7 @@ export default function Wizard({ onStart }: { onStart: (m: Match) => void }) {
                   <input value={n} maxLength={12} aria-label={`Player ${i + 1} name`}
                     onChange={(e) => setNames((a) => a.map((x, j) => (j === i ? e.target.value : x)))}
                     onFocus={(e) => e.target.select()}
-                    className="min-h-11 min-w-0 flex-1 rounded-xl border-2 border-slate-200 bg-slate-50 px-3 text-base font-bold outline-none focus:border-ink" />
+                    className="min-h-11 min-w-0 flex-1 rounded-xl border-2 border-slate-200 bg-slate-50 px-3 text-base font-bold outline-none focus:border-dk-ink" />
                   {names.length > 1 && (
                     <button aria-label={`Remove player ${i + 1}`} onClick={() => setNames((a) => a.filter((_, j) => j !== i))} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-slate-100 text-lg font-black">✕</button>
                   )}
@@ -124,7 +124,7 @@ export default function Wizard({ onStart }: { onStart: (m: Match) => void }) {
             <ol className="space-y-2">
               {order.map((pi, pos) => (
                 <li key={pi} className="flex items-center gap-2 rounded-2xl bg-white p-2 shadow-md ring-1 ring-slate-200">
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-ink text-sm font-black text-ball">{pos + 1}</span>
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-dk-ink text-sm font-black text-dk-ball">{pos + 1}</span>
                   <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-black text-white ${BG[pi]}`}>{nm(pi).slice(0, 2).toUpperCase()}</span>
                   <span className="min-w-0 flex-1 truncate text-base font-black">{nm(pi)}</span>
                   <button disabled={pos === 0} onClick={() => move(pos, -1)} aria-label={`Move ${nm(pi)} up`} className="grid h-11 w-11 place-items-center rounded-xl bg-slate-100 font-black disabled:opacity-30">▲</button>

@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
-import { finishes, routeText } from "@/lib/darts";
+import { finishes, routeText } from "../lib/darts";
 
 type Tab = "rules" | "flow" | "finishes";
 
 const Card = ({ icon, title, children }: { icon: string; title: string; children: ReactNode }) => (
   <section className="flex gap-3 rounded-2xl bg-white p-4 shadow-md ring-1 ring-slate-200">
-    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-ball text-2xl shadow-inner">{icon}</span>
+    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-dk-ball text-2xl shadow-inner">{icon}</span>
     <div className="min-w-0">
       <h2 className="text-xl font-black leading-tight">{title}</h2>
       <div className="mt-1 text-base font-medium leading-snug text-slate-700">{children}</div>
@@ -40,10 +40,10 @@ export default function Reference({ tab }: { tab: Tab }) {
         )}
         {tab === "flow" && (
           <ol className="relative space-y-3 pl-1">
-            <span className="absolute bottom-6 left-[27px] top-6 w-1 rounded bg-ink/15" />
+            <span className="absolute bottom-6 left-[27px] top-6 w-1 rounded bg-dk-ink/15" />
             {FLOW.map(([icon, title, lines], i) => (
               <li key={title} className="relative flex gap-3">
-                <span className="relative z-[1] grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-xl shadow-md ring-4 ring-[#eef2f7]">{icon}</span>
+                <span className="relative z-[1] grid h-12 w-12 shrink-0 place-items-center rounded-full bg-dk-ink text-xl shadow-md ring-4 ring-[#eef2f7]">{icon}</span>
                 <div className="flex-1 rounded-2xl bg-white p-3 shadow-md ring-1 ring-slate-200">
                   <h2 className="text-lg font-black leading-tight"><span className="text-slate-400">{i + 1}.</span> {title}</h2>
                   <ul className="mt-1 space-y-1 text-base font-medium leading-snug text-slate-700">
@@ -61,7 +61,7 @@ export default function Reference({ tab }: { tab: Tab }) {
             <ul className="mt-2 divide-y divide-slate-100">
               {TABLE.map(([r, route]) => (
                 <li key={r} className="flex items-center gap-3 py-1.5">
-                  <span className="w-12 shrink-0 rounded-lg bg-ink py-1 text-center text-base font-black text-ball">{r}</span>
+                  <span className="w-12 shrink-0 rounded-lg bg-dk-ink py-1 text-center text-base font-black text-dk-ball">{r}</span>
                   <span className="text-base font-bold">{routeText(route)}</span>
                 </li>
               ))}

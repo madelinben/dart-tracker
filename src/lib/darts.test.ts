@@ -1,6 +1,17 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { adviceText, finishes, label, MISS, shift, start, throwDart, value, type Dart, type Match } from "./darts.ts";
+import {
+  adviceText,
+  type Dart,
+  finishes,
+  label,
+  type Match,
+  MISS,
+  shift,
+  start,
+  throwDart,
+  value,
+} from "./darts.ts";
 
 const D = (m: 1 | 2 | 3, n: number): Dart => ({ m, n });
 const cfg = (over = {}) => ({ names: ["Al", "Bo"], start: 301, doubleOut: true, legs: 1, ...over });
@@ -12,11 +23,16 @@ test("checkout routes are valid and sensible", () => {
   assert.deepEqual(finishes(40, 3, true)[0].map(label), ["D20"]);
   assert.deepEqual(finishes(32, 3, true)[0].map(label), ["D16"]);
   assert.deepEqual(finishes(100, 2, true)[0].map(label), ["T20", "D20"]);
-  for (let r = 2; r <= 170; r++) for (const route of finishes(r, 3, true)) {
-    assert.equal(route.reduce((s, d) => s + value(d), 0), r);
-    assert.equal(route.at(-1)!.m, 2);
-  }
-  for (const bogey of [169, 168, 166, 165, 163, 162, 159]) assert.equal(finishes(bogey, 3, true).length, 0);
+  for (let r = 2; r <= 170; r++)
+    for (const route of finishes(r, 3, true)) {
+      assert.equal(
+        route.reduce((s, d) => s + value(d), 0),
+        r
+      );
+      assert.equal(route.at(-1)!.m, 2);
+    }
+  for (const bogey of [169, 168, 166, 165, 163, 162, 159])
+    assert.equal(finishes(bogey, 3, true).length, 0);
   assert.equal(finishes(171, 3, true).length, 0);
   assert.equal(finishes(180, 3, false)[0].map(label).join(" "), "T20 T20 T20"); // straight out
 });
@@ -63,7 +79,10 @@ test("leg and match: checkout, alternate starter, averages", () => {
   m = throws(m, D(2, 20)); // Al wins leg 1
   assert.equal(m.legs[0], 1);
   assert.equal(m.winner, null);
-  assert.deepEqual(m.steps.map((s) => s.icon), ["🎯", "🔁"]);
+  assert.deepEqual(
+    m.steps.map((s) => s.icon),
+    ["🎯", "🔁"]
+  );
   assert.deepEqual(m.rem, [40, 40]);
   assert.equal(m.cur, 1); // Bo starts leg 2
   m = shift(shift(m));

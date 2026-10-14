@@ -36,7 +36,8 @@ function cost(d: Dart, last: boolean, doubleOut: boolean) {
   if (d.m === 1) return d.n === 25 ? 5 : d.n === 20 ? 3 : 6 + (20 - d.n) * 0.05;
   return 4 + (20 - d.n) * 0.05; // doubles mid-route / bull
 }
-const routeCost = (r: Route, doubleOut: boolean) => r.reduce((s, d, i) => s + cost(d, i === r.length - 1, doubleOut), 0);
+const routeCost = (r: Route, doubleOut: boolean) =>
+  r.reduce((s, d, i) => s + cost(d, i === r.length - 1, doubleOut), 0);
 const canFinish = (d: Dart, doubleOut: boolean) => (doubleOut ? d.m === 2 : d.m > 0);
 
 const cache = new Map<string, Route[]>();
@@ -53,10 +54,11 @@ export function finishes(rem: number, darts: number, doubleOut: boolean): Route[
     for (const a of ALL) for (const l of lastFor(rem - value(a))) out.push([a, l]);
   }
   if (darts >= 3) {
-    for (const a of ALL) for (const b of ALL) {
-      if (value(b) > value(a)) continue; // canonical order: biggest first
-      for (const l of lastFor(rem - value(a) - value(b))) out.push([a, b, l]);
-    }
+    for (const a of ALL)
+      for (const b of ALL) {
+        if (value(b) > value(a)) continue; // canonical order: biggest first
+        for (const l of lastFor(rem - value(a) - value(b))) out.push([a, b, l]);
+      }
   }
   out.sort((x, y) => x.length - y.length || routeCost(x, doubleOut) - routeCost(y, doubleOut));
   const best = out.slice(0, 3);
@@ -74,13 +76,20 @@ export function setup(rem: number, left: number, doubleOut: boolean): Route | nu
     const next = left > 1 ? finishes(r, left - 1, doubleOut)[0] : finishes(r, 3, doubleOut)[0];
     if (!next) continue;
     const route = left > 1 ? [d, ...next] : [d];
-    const c = cost(d, false, doubleOut) + routeCost(next, doubleOut) + next.length * 10 + (left > 1 ? 0 : 15);
+    const c =
+      cost(d, false, doubleOut) +
+      routeCost(next, doubleOut) +
+      next.length * 10 +
+      (left > 1 ? 0 : 15);
     if (!best || c < best.c) best = { r: route, c };
   }
   return best?.r ?? null;
 }
 
-export type Advice = { kind: "finish"; routes: Route[] } | { kind: "setup"; route: Route } | { kind: "score"; route: Route };
+export type Advice =
+  | { kind: "finish"; routes: Route[] }
+  | { kind: "setup"; route: Route }
+  | { kind: "score"; route: Route };
 export function advice(rem: number, left: number, doubleOut: boolean): Advice {
   const f = finishes(rem, left, doubleOut);
   if (f.length) return { kind: "finish", routes: f };
@@ -100,19 +109,28 @@ export function adviceText(rem: number, left: number, doubleOut: boolean) {
 export function start(cfg: Config): Match {
   const n = cfg.names.length;
   return {
-    cfg, rem: Array(n).fill(cfg.start), legs: Array(n).fill(0), cur: 0, starter: 0, leg: 1,
-    visit: [], visitStart: cfg.start,
-    stats: cfg.names.map(() => ({ darts: 0, pts: 0, high: 0 })), winner: null,
-    steps: [{
-      icon: "🎯",
-      title: "Game on!",
-      lines: [
-        `${cfg.names[0]} throws first`,
-        `Order of play: ${cfg.names.join(" → ")}`,
-        `First to ${cfg.legs} leg${cfg.legs > 1 ? "s" : ""} · ${cfg.start} · ${cfg.doubleOut ? "double out" : "straight out"}`,
-        "3 darts each visit: enter every dart, then confirm the hand-over",
-      ],
-    }],
+    cfg,
+    rem: Array(n).fill(cfg.start),
+    legs: Array(n).fill(0),
+    cur: 0,
+    starter: 0,
+    leg: 1,
+    visit: [],
+    visitStart: cfg.start,
+    stats: cfg.names.map(() => ({ darts: 0, pts: 0, high: 0 })),
+    winner: null,
+    steps: [
+      {
+        icon: "🎯",
+        title: "Game on!",
+        lines: [
+          `${cfg.names[0]} throws first`,
+          `Order of play: ${cfg.names.join(" → ")}`,
+          `First to ${cfg.legs} leg${cfg.legs > 1 ? "s" : ""} · ${cfg.start} · ${cfg.doubleOut ? "double out" : "straight out"}`,
+          "3 darts each visit: enter every dart, then confirm the hand-over",
+        ],
+      },
+    ],
   };
 }
 
@@ -121,7 +139,10 @@ export const avg = (s: Stat) => (s.darts ? ((s.pts / s.darts) * 3).toFixed(1) : 
 const sum = (v: Dart[]) => v.reduce((s, d) => s + value(d), 0);
 
 function upNext(m: Match, rem: number[], next: number) {
-  return [`Next up: ${m.cfg.names[next]} (${rem[next]} left)`, adviceText(rem[next], 3, m.cfg.doubleOut)];
+  return [
+    `Next up: ${m.cfg.names[next]} (${rem[next]} left)`,
+    adviceText(rem[next], 3, m.cfg.doubleOut),
+  ];
 }
 
 export function throwDart(m: Match, d: Dart): Match {
@@ -136,17 +157,29 @@ export function throwDart(m: Match, d: Dart): Match {
   const nextState = { cur: next, visit: [] as Dart[], visitStart: rem[next] };
 
   const reason =
-    r < 0 ? "Score went below zero"
-    : m.cfg.doubleOut && r === 1 ? "Can't leave 1: you need a double to finish"
-    : m.cfg.doubleOut && r === 0 && d.m !== 2 ? "You must finish on a double"
-    : null;
+    r < 0
+      ? "Score went below zero"
+      : m.cfg.doubleOut && r === 1
+        ? "Can't leave 1: you need a double to finish"
+        : m.cfg.doubleOut && r === 0 && d.m !== 2
+          ? "You must finish on a double"
+          : null;
   if (reason) {
     rem[p] = m.visitStart;
     stats[p].darts += 3;
     nextState.visitStart = rem[next];
     return {
-      ...m, ...nextState, rem, stats,
-      steps: [{ icon: "💥", title: "BUST!", lines: [reason, `${name} stays on ${m.visitStart}`, ...upNext(m, rem, next)] }],
+      ...m,
+      ...nextState,
+      rem,
+      stats,
+      steps: [
+        {
+          icon: "💥",
+          title: "BUST!",
+          lines: [reason, `${name} stays on ${m.visitStart}`, ...upNext(m, rem, next)],
+        },
+      ],
     };
   }
 
@@ -157,16 +190,23 @@ export function throwDart(m: Match, d: Dart): Match {
     stats[p].darts += visit.length;
     stats[p].pts += sum(visit);
     stats[p].high = Math.max(stats[p].high, sum(visit));
-    const steps: Step[] = [{
-      icon: "🎯",
-      title: `Game shot! ${name} wins leg ${m.leg}`,
-      lines: [`Finished on ${visit.map(label).join(" ")}`, `Legs: ${m.cfg.names.map((n, i) => `${n} ${legs[i]}`).join(" · ")}`],
-    }];
+    const steps: Step[] = [
+      {
+        icon: "🎯",
+        title: `Game shot! ${name} wins leg ${m.leg}`,
+        lines: [
+          `Finished on ${visit.map(label).join(" ")}`,
+          `Legs: ${m.cfg.names.map((n, i) => `${n} ${legs[i]}`).join(" · ")}`,
+        ],
+      },
+    ];
     if (legs[p] >= m.cfg.legs) {
       steps.push({
         icon: "🏆",
         title: `${name} wins the match!`,
-        lines: m.cfg.names.map((n, i) => `${n}: ${avg(stats[i])} 3-dart avg · best visit ${stats[i].high}`),
+        lines: m.cfg.names.map(
+          (n, i) => `${n}: ${avg(stats[i])} 3-dart avg · best visit ${stats[i].high}`
+        ),
       });
       return { ...m, rem, legs, stats, visit, steps, winner: p };
     }
@@ -175,9 +215,25 @@ export function throwDart(m: Match, d: Dart): Match {
     steps.push({
       icon: "🔁",
       title: `Leg ${m.leg + 1}`,
-      lines: [`Scores reset to ${m.cfg.start}`, `${m.cfg.names[starter]} throws first`, "Players alternate who starts each leg", adviceText(m.cfg.start, 3, m.cfg.doubleOut)],
+      lines: [
+        `Scores reset to ${m.cfg.start}`,
+        `${m.cfg.names[starter]} throws first`,
+        "Players alternate who starts each leg",
+        adviceText(m.cfg.start, 3, m.cfg.doubleOut),
+      ],
     });
-    return { ...m, rem: fresh, legs, stats, steps, cur: starter, starter, leg: m.leg + 1, visit: [], visitStart: m.cfg.start };
+    return {
+      ...m,
+      rem: fresh,
+      legs,
+      stats,
+      steps,
+      cur: starter,
+      starter,
+      leg: m.leg + 1,
+      visit: [],
+      visitStart: m.cfg.start,
+    };
   }
 
   if (visit.length === 3) {
@@ -187,12 +243,21 @@ export function throwDart(m: Match, d: Dart): Match {
     stats[p].high = Math.max(stats[p].high, total);
     const tag = total === 180 ? "🔥" : total >= 100 ? "💯" : "🎯";
     return {
-      ...m, ...nextState, rem, stats,
-      steps: [{
-        icon: tag,
-        title: `${name} scored ${total}${total === 180 ? "!" : ""}`,
-        lines: [visit.map(label).join(" · "), `${name}: ${m.visitStart} → ${r} left`, ...upNext(m, rem, next)],
-      }],
+      ...m,
+      ...nextState,
+      rem,
+      stats,
+      steps: [
+        {
+          icon: tag,
+          title: `${name} scored ${total}${total === 180 ? "!" : ""}`,
+          lines: [
+            visit.map(label).join(" · "),
+            `${name}: ${m.visitStart} → ${r} left`,
+            ...upNext(m, rem, next),
+          ],
+        },
+      ],
     };
   }
   return { ...m, rem, visit };

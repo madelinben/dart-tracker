@@ -37,7 +37,7 @@ export default function Board({ targets, thrown }: { targets: Dart[]; thrown: Da
       role="img"
       aria-label="Dartboard"
     >
-      <circle r="116" fill="#0f172a" />
+      <circle r="116" fill="#0b1d3a" />
       <circle r="104" fill="#111" />
       {ORDER.map((n, i) => {
         const a1 = i * 18 - 9,
@@ -53,7 +53,7 @@ export default function Board({ targets, thrown }: { targets: Dart[]; thrown: Da
                 <path
                   key={m + "-" + r1}
                   d={ring(r1, r2, a1, a2)}
-                  fill={hot ? "#f97316" : base}
+                  fill={hot ? "#d9f100" : base}
                   stroke="#9ca3af"
                   strokeWidth="0.5"
                   className={hot ? "dk-pulse" : undefined}
@@ -76,14 +76,14 @@ export default function Board({ targets, thrown }: { targets: Dart[]; thrown: Da
       })}
       <circle
         r={R.outer}
-        fill={isT(1, 25) ? "#f97316" : "#15803d"}
+        fill={isT(1, 25) ? "#d9f100" : "#15803d"}
         stroke="#9ca3af"
         strokeWidth="0.5"
         className={isT(1, 25) ? "dk-pulse" : undefined}
       />
       <circle
         r={R.bull}
-        fill={isT(2, 25) ? "#f97316" : "#dc2626"}
+        fill={isT(2, 25) ? "#d9f100" : "#dc2626"}
         stroke="#9ca3af"
         strokeWidth="0.5"
         className={isT(2, 25) ? "dk-pulse" : undefined}
@@ -94,13 +94,13 @@ export default function Board({ targets, thrown }: { targets: Dart[]; thrown: Da
           const [x, y] = hitPos(d);
           return (
             <g key={i} transform={`translate(${x} ${y})`}>
-              <circle r="6" fill="#fff" stroke="#0f172a" strokeWidth="1.5" />
+              <circle r="6" fill="#fff" stroke="#0b1d3a" strokeWidth="1.5" />
               <text
                 textAnchor="middle"
                 dominantBaseline="central"
                 fontSize="8"
                 fontWeight="800"
-                fill="#0f172a"
+                fill="#0b1d3a"
               >
                 {i + 1}
               </text>

@@ -74,7 +74,7 @@ export default function Reference({ tab }: { tab: Tab }) {
             <span className="absolute bottom-6 left-[27px] top-6 w-1 rounded bg-dk-ink/15" />
             {FLOW.map(([icon, title, lines], i) => (
               <li key={title} className="relative flex gap-3">
-                <span className="relative z-[1] grid h-12 w-12 shrink-0 place-items-center rounded-full bg-dk-ink text-xl shadow-md ring-4 ring-[#f8fafc]">
+                <span className="relative z-[1] grid h-12 w-12 shrink-0 place-items-center rounded-full bg-dk-ink text-xl shadow-md ring-4 ring-[#eef2f7]">
                   {icon}
                 </span>
                 <div className="flex-1 rounded-2xl bg-white p-3 shadow-md ring-1 ring-slate-200">

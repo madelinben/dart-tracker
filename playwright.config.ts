@@ -5,11 +5,11 @@ export default defineConfig({
   fullyParallel: true,
   retries: process.env.CI ? 1 : 0,
   reporter: [["list"]],
-  use: { baseURL: "http://localhost:3101/darts-score/", trace: "on-first-retry" },
+  use: { baseURL: "http://localhost:3101/dart-tracker/", trace: "on-first-retry" },
   projects: [{ name: "mobile", use: { ...devices["Pixel 5"] } }],
   webServer: {
     command: "npx next dev -p 3101",
-    url: "http://localhost:3101/darts-score/",
+    url: "http://localhost:3101/dart-tracker/",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

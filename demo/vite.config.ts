@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 // Standalone GitHub Pages build: output lands in docs/ (Pages source = main /docs).
 export default defineConfig({
   root: import.meta.dirname,
-  base: "/darts-score/",
+  base: "/dart-tracker/",
   plugins: [react(), tailwindcss()],
   server: { port: 3101 },
   build: { outDir: "../docs", emptyOutDir: true },

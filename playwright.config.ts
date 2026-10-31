@@ -8,7 +8,7 @@ export default defineConfig({
   use: { baseURL: "http://localhost:3101/dart-tracker/", trace: "on-first-retry" },
   projects: [{ name: "mobile", use: { ...devices["Pixel 5"] } }],
   webServer: {
-    command: "npx next dev -p 3101",
+    command: "npx vite --config demo/vite.config.ts --port 3101",
     url: "http://localhost:3101/dart-tracker/",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
